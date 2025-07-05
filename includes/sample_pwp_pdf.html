@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+		<script>
+			function generatePDF() {
+			const element = document.getElementById('container_content');
+			var opt = {
+				  margin:       0.25,
+				  filename:     'pwp_SamplePDF.pdf',
+				  image:        { type: 'jpeg', quality: 0.98 },
+				  html2canvas:  { scale: 2 },
+				  jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+				};
+				// Choose the element that our invoice is rendered in.
+				html2pdf().set(opt).from(element).save();
+			}
+		</script>
+		<style>
+			body{
+				font-size:10px;
+			}
+		</style>
+		</head>
+	<body>
+		<div class="text-center" style="padding:15px;"></div>
+			<button onclick="generatePDF()">Generate PDF using HTML2PDF</button>
+		</div>
+		<div class="container_content" id="container_content" >
+				<img src="qpmiLogoPng.PNG" >
+
+			<div class="invoice-box">
+
+				<table cellpadding="0" cellspacing="0">
+					<tr class="information">
+						<td colspan="2">
+							<table>
+								<tr>
+									<td>DATE OF PWP:</td>
+									<td></td>
+									<td>PWP SERIES NO.:</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>NAME OF ACCOUNT:</td>
+									<td></td>
+									<td>COST CENTER:</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>CHANNEL CLASS:</td>
+									<td></td>
+									<td>PROMO DURATION:</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>TERRITORY:</td>
+									<td></td>
+									<td>FROM:</td>
+									<td>TO:</td>
+								</tr>
+								<tr>
+									<td>ACTIVITY TYPE:</td>
+									<td></td>
+									<td>POST PROMO EVALUATION DEADLINE:</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>2023 TARGET:</td>
+									<td></td>
+									<td>YTD 2022 SALES:</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>TRADE DISCOUNT:</td>
+									<td></td>
+									<td>YTD 2023 SALES:</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>DA (IF APPLICABLE):</td>
+									<td></td>
+									<td>VARIANCE (PESO VALUE):</td>
+									<td></td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					<tr class="information">
+						<td colspan="2">
+							<table>
+								<tr>
+									<td>PROJECT BACKGROUND:</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>PROMO TITLE:</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>OBJECTIVE:</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>MECHANICS:</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>CONCESSION:</td>
+									<td></td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					<tr class="information">
+						<td colspan="2">
+							<table>
+								<tr>
+									<td>PROJECT BACKGROUND:</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>PROMO TITLE:</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>OBJECTIVE:</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>MECHANICS:</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>CONCESSION:</td>
+									<td></td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					<tr class="information">
+						<td colspan="2">
+							PROJECTED ANALYSIS VOLUME:
+							<table>
+								<thead>
+									<tr>
+										<td rowspan="2">CATEGORY/BRAND</td>
+										<td colspan="2">AVERAGE MONTHLY SALES</td>
+										<td colspan="2">INCREMENTAL</td>
+										<td colspan="2">PROJECTED VOLUME</td>
+									</tr>
+									<tr>
+										<td>In Case</td>
+										<td>Peso Value</td>
+										<td>In Case</td>
+										<td>Peso Value</td>
+										<td>In Case</td>
+										<td>Peso Value</td>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+									</tr>
+								</tbody>
+							</table>
+						</td>
+					</tr>
+					<tr class="information">
+						<td colspan="2">
+							PROMO COST ESTIMATES:
+							<table>
+								<thead>
+									<tr>
+										<td>ITEM DESCRIPTION</td>
+										<td>QTY</td>
+										<td>UNIT COST</td>
+										<td>TOTAL AMOUNT</td>
+										<td>EXPENSE DESCRIPTION</td>
+										<td>QTY</td>
+										<td>UNIT COST</td>
+										<td>TOTAL AMOUNT</td>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</td>
+					</tr>
+					<tr class="information">
+						<td>
+							<table>
+								<tr>
+									<td>TOTAL PROJECT COST</td>
+									<td></td>
+								</tr>
+							</table><br />
+							<table>
+								<tr>
+									<td colspan="2">TOTAL Cost to Sales Computation</td>
+								</tr>
+								<tr>
+									<td>Projected Sales</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>Projected Cost</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>Cost to Sales Ratio</td>
+									<td></td>
+								</tr>
+							</table>
+						</td>
+						<td>
+							<table>
+								<tr>
+									<td>Recommending Approval:</td>
+									<td colspan='2'>Approved By:</td>
+								</tr>
+								<tr>
+									<td></td>
+									<td></td>
+									<td></td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<table>
+								<tr>
+									<td>Prepared by:</td>
+									<td colspan='2'>Reviewed by:</td>
+								</tr>
+								<tr>
+									<td></td>
+									<td></td>
+									<td></td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</body>
+</html>

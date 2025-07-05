@@ -1,0 +1,94 @@
+.tab {
+	overflow:hidden;
+	border:1px solid #ccc;
+	background-color:#f1f1f1;
+}
+.tab button{
+	background-color:inherit;
+	float:left;
+	border:none;
+	ooutline:none;
+	cursor:pointer;
+	padding:14px 16px;
+	transition:0.3s;
+}
+.tab button:hover{
+	background-color:#ddd;
+}
+.tab button.active{
+	background-color:#ccc;
+}
+.tabContent{
+	padding:6px 12px;
+	border:1px solid #ccc;
+	border-top:none;
+}
+.sales_body{
+	float:left;
+}
+h3{
+	text-align: center;
+}
+input{
+	text-align:center;
+	width: 100%;
+}
+textarea{
+	width: 75%;	
+}
+table{
+	width: 100%;
+}
+body{
+	font-family: arial;
+}
+thead{
+	background-color: lightgray;
+}
+.div_bold{
+	font-weight: bold;
+}
+.v_align {
+	vertical-align: middle;
+}
+input{
+	text-align: left;
+}
+.s_txt{
+	width: 25%;
+}
+span{
+	font-weight: bold;
+}
+.modal{
+	display: none;
+}
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+.float_left{
+  float: left;
+}
+.float_right{
+  float: right;
+}
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+li a:hover:not(.active) {
+  background-color: #111;
+}
+.btn_cntr{
+    text-align: center;
+}

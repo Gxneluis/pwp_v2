@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.debug.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.9.0/dist/pdf-lib.min.js"></script>
+	<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script src="sample_1.js"></script>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+
+	<script type="text/javascript">
+
+		imgLogo = new Image();
+		img1 = new Image();
+		img2 = new Image();
+		img3 = new Image();
+		img4 = new Image();
+		img5 = new Image();
+		img6 = new Image();
+		imgLogo.src = 'img/qpmiLogoPng.PNG';
+		sLoc = "../uploads/signature/";
+
+		dVal = new Date();
+		currYear = dVal.getFullYear();
+		prevYear = currYear-1;
+		iRun = 140;
+		aCookies = getCookie();
+		reqId = aCookies['reqId'];
+		getPWPRequest(reqId);
+		getPWPPVA(reqId);
+		getPWPPCE(reqId);
+		aPWPRequest = splitCookie();
+		aPWPPVA = splitPVA();
+		aPWPPCE = splitPCE();
+        aPWPFile = splitFile(reqId);
+		aSignrs = getSgnrs(reqId);
+		if(aSignrs['rqstr_sign']!="null"){ img1.src = sLoc+aSignrs['rqstr_sign']; }
+		if(aSignrs['revwr_sign']!="null"){ img2.src = sLoc+aSignrs['revwr_sign']; }
+		if(aSignrs['aprvr_sign']!="null"){ img3.src = sLoc+aSignrs['aprvr_sign']; }
+		if(aSignrs['globl_sign']!="null"){ img4.src = sLoc+aSignrs['globl_sign']; }
+		// img5.src = sLoc+aSignrs['uknwn_sign'];
+		// img6.src = sLoc+aSignrs['gmngr_sign'];
+
+		// img1.src = 'signature/signature_00001.png';
+		// img2.src = 'signature/signature_00001.png';
+		// img3.src = 'signature/signature_00001.png';
+		// img4.src = 'signature/signature_00001.png';
+		// img5.src = 'signature/signature_00001.png';
+		// img6.src = 'signature/signature_00001.png';
+
+		var doc = new jsPDF();
+
+		sPWP = "PROJECT WORK PLAN";
+		sDateofPWP = "Date of PWP :";
+		sNameofAccnt = "Name of Account :";
+		sChannelClass = "Channel Class :";
+		sTerritory = "Territory :";
+		sProjectType = "Project Type :";
+		sActivityType = "Activity Type :";
+		sTradeDisc = "Trade Discount :";
+		sDA = "DA (if Applicable) :";
+		sPWPSeriesNo = "PWP Series No :";
+		sCostCent = "Cost Center :";
+		sPromoDur = "Promo Duration :";
+		sEvalDdln = "Evaluation Deadline :";
+		sTtlSale = "Full Year Sales :";
+		sTtlTarg = "Total Target :";
+		sYTDTarg = "YTD Sales :";
+		sYTDActl = "YTD Sales :";
+		sTtlDiff = "Diff. :";
+		sTtlGrwt = "Growth :";
+		sYTDDiff = "Diff. :";
+		sYTDAchi = "Achieved :";
+		sBackground = "Background";
+		sPromoTitle = "Promo Title";
+		sObjectives = "Objectives";
+		sMechanics = "Mechanics";
+		sConcession = "Concession";
+		sRiskInv = "Risk/s Involved";
+		sPVA = "Projected Volume Analysis";
+		sPCE = "Promo Cost Estimates";
+		sTPC = "Total Project Cost";
+		sPS = "Projected Sales";
+		sPC = "Projected Cost";
+		sC2SR = "Cost to Sales Ratio (%)";
+
+// File Type Allocation
+		sFT1 = "COMPUTATIONS";
+		sFT2 = "FORECAST/ALLOCATIONS";
+		sFT3 = "HISTORICAL DATA";
+		sFT4 = "OTHER RELEVANT DATA";
+		sFT5 = "RELEVANT PHOTO/S";
+		sFT6 = "SCHEMES";
+		sFT7 = "TRADE LETTER";
+
+	function imgLoad(iRun){
+		imgLogo.onload = () =>{
+				// name, format, x, y, width, height
+			if(aSignrs['rqstr_sign']!=""){ doc.addImage(img1, 'png', 10, iRun+16, 12.5, 12.5); }
+      if(aSignrs['revwr_sign']!=""){ doc.addImage(img2, 'png', 70, iRun+16, 12.5, 12.5); }
+      if(aSignrs['aprvr_sign']!=""){ doc.addImage(img3, 'png', 140, iRun+16, 12.5, 12.5); }
+      if(aSignrs['globl_sign']!=""){ doc.addImage(img4, 'png', 10, iRun+46, 12.5, 12.5); }
+			// doc.addImage(img5, 'png', 70, iRun+46, 15, 15);
+			// doc.addImage(img6, 'png', 140, iRun+46, 15, 15);
+			doc.addImage(imgLogo, 'png', 70, 5, 50, 10);
+			var currentdate = new Date();
+			var datetime = currentdate.getDate()
+                + (currentdate.getMonth()+1)
+                + currentdate.getFullYear() + "_"
+                + currentdate.getHours()
+                + currentdate.getMinutes()
+                + currentdate.getSeconds();
+            console.log(datetime);
+            pdfFileName = "PWP_"+datetime;
+			doc.save(pdfFileName);
+		}
+	}
+// Signatories
+		sSig1 = "Prepared by:";
+		sSig2 = "Reviewed by:";
+		sSig3 = "Endorsed by:";
+		sSig4 = "Recommending Approval:";
+		sSig5 = "Approved by:";
+		sSig6 = "Approved by:";
+		sPosition1 = "KAS/KAM/BDM";
+		sPosition2 = "ASM";
+		sPosition3 = "ASH";
+		sPosition4 = "MM";
+		sPosition5 = "BDD";
+		sPosition6 = "President/CEO";
+		if(aSignrs['rqstr_name']!=null){ sSigName1 = aSignrs['rqstr_name']; }
+        else{ sSigName1 = ""; }
+		if(aSignrs['revwr_name']!=null){ sSigName2 = aSignrs['revwr_name']; }
+        else{ sSigName2 = ""; }
+        if(aSignrs['aprvr_name']!=null){ sSigName3 = aSignrs['aprvr_name']; }
+        else{ sSigName3 = ""; }
+        if(aSignrs['globl_name']!=null){ sSigName4 = aSignrs['globl_name']; }
+        else{ sSigName4 = ""; }
+        if(aSignrs['uknwn_name']!=null){ sSigName5 = aSignrs['uknwn_name']; }
+        else{ sSigName5 = ""; }
+        if(aSignrs['gmngr_name']!=null){ sSigName6 = aSignrs['gmngr_name']; }
+        else{ sSigName6 = ""; }
+// db Records
+		sDateofPWP_val = aPWPRequest['pwpDate'];
+		sNameofAccnt_val = aPWPRequest['accountName'];
+		sChannelClass_val = aPWPRequest['channelClass'];
+		sTerritory_val = aPWPRequest['territory'];
+		sProjectType_val = aPWPRequest['projType'];
+		sActivityType_val = aPWPRequest['activityType'];
+		sTradeDisc_val = aPWPRequest['tradeDisc']+"%";
+		sDA_val = aPWPRequest['da'];
+		sPWPSeriesNo_val = "";
+		sCostCent_val = "";
+		sPromoStrt_val = aPWPRequest['promoFrom'];
+		sPromoEnd_val = aPWPRequest['promoTo'];
+		sEvalDdln_val = aPWPRequest['postPromoEval'];
+		sTtlSale_val = aPWPRequest['prvSal'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+		sTtlTarg_val = aPWPRequest['curTrg'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+		sYTDTarg_val = aPWPRequest['ytdTrg'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+		sYTDActu_val = aPWPRequest['ytdAct'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+		sTtlDiff_val = aPWPRequest['ttlDif'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+		sTtlGrwt_val = aPWPRequest['ttlGrw'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+		sYTDDiff_val = aPWPRequest['ytdDif'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+		sYTDAchi_val = aPWPRequest['ytdAch'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+		sBackground_val = doc.splitTextToSize(aPWPRequest['background'], 200);
+		sPromoTitle_val = doc.splitTextToSize(aPWPRequest['promoTitle'], 200);
+		sObjectives_val = doc.splitTextToSize(aPWPRequest['objectives'], 200);
+		sMechanics_val = doc.splitTextToSize(aPWPRequest['mechanics'], 200);
+		sConcession_val = doc.splitTextToSize(aPWPRequest['concession'], 200);
+		sRisk_val = doc.splitTextToSize(aPWPRequest['risks'], 200);
+		iAMSICTtl = 0;	// Average Monthly Sales In Case Total
+		iAMSPVTtl = 0;	// Average Monthly Sales Peso Value Total
+		iITSICTtl = 0;	// Incremental Target Sales In Case Total
+		iITSPVTtl = 0;	// Incremental Target Sales Peso Value Total
+		iMAIICTtl = 0;	// Mo. Average + Incremental In Case Total
+		iMAIPVTtl = 0;	// Mo. Average + Incremental Peso Value Total
+		iTPDICTtl = 0;	// Total Project Duration In Case Total
+		iTPDPVTtl = 0;	// Total Project Duration Peso Value Total
+		iItmstiQtyTotal = 0;	// Promo Cost Estimates Quantity
+		iItmUntCstTotal = 0;	// Promo Cost Estimates Unit Cost
+		iItmTtlCstTotal = 0;	// Promo Cost Estimates Total Cost
+		iExpnseQtyTotal = 0;	// Promo Cost Estimate Expense Quantity
+		iExpUntCstTotal = 0;	// Promo Cost Estimate Expense Unit Cost
+		iExpTtlCstTotal = 0;	// Promo Cost Estimate Expense Total Cost
+
+		sTPC_val = aPWPRequest['totProjCost'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','); 	// Total Project Cost
+		sPS_val = aPWPRequest['projectedSales'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','); 	// Projected Sales
+		sPC_val = aPWPRequest['projectedCost'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','); 	// Projected Cost
+		sC2SR_val = ((parseInt(aPWPRequest['projectedCost'])/parseInt(aPWPRequest['projectedSales']))*100).toFixed(2)+"%"; 			// Cost to Sales Ratio (%)
+
+
+		sFB1 = aPWPFile['file01'];	// Upload File #1
+		sFB2 = aPWPFile['file02'];	// Upload File #2
+		sFB3 = aPWPFile['file03'];	// Upload File #3
+		sFB4 = aPWPFile['file04'];	// Upload File #4
+		sFB5 = aPWPFile['file05'];	// Upload File #5
+		sFB6 = aPWPFile['file06'];	// Upload File #6
+		sFB7 = aPWPFile['file07'];	// Upload File #7
+						doc.setFontSize(7);
+    doc.text("Effectivity Date :",175,10);
+		doc.text("Rev. No. 0 :",175,13);
+		doc.text("MKG-QR-",90,25);
+            doc.setFontSize(14);
+				doc.setFont(undefined, 'bold');
+		doc.text(sPWP, 70, 20);
+				doc.setFont(undefined, 'normal');
+            doc.setFontSize(10);
+		doc.text(sDateofPWP, 10, 30);
+			doc.text(sDateofPWP_val, 50, 30);
+				doc.line(50, 31, 90, 31);
+		doc.text(sNameofAccnt, 10, 35);
+			doc.text(sNameofAccnt_val, 50, 35);
+				doc.line(50, 36, 90, 36);
+		doc.text(sChannelClass, 10, 40);
+			doc.text(sChannelClass_val, 50, 40);
+				doc.line(50, 41, 90, 41);
+		doc.text(sTerritory, 10, 45);
+			doc.text(sTerritory_val, 50, 45);
+				doc.line(50, 46, 90, 46);
+		// doc.text(sProjectType, 10, 50);
+			// doc.text(sProjectType_val, 50, 50);
+				// doc.line(50, 51, 90, 51);
+		doc.text(sActivityType, 10, 55);
+			doc.text(sActivityType_val, 50, 55);
+				doc.line(50, 56, 90, 56);
+		doc.text(sTradeDisc, 10, 60);
+			doc.text(sTradeDisc_val, 50, 60);
+				doc.line(50, 61, 90, 61);
+		doc.text(sDA, 10, 65);
+			doc.text(sDA_val, 50, 65);
+				doc.line(50, 66, 90, 66);
+
+		doc.text(sPWPSeriesNo, 100, 30);
+			doc.text(sPWPSeriesNo_val, 145, 30);
+				doc.line(145, 31, 200, 31);
+		doc.text(sCostCent, 100, 35);
+			doc.text(sCostCent_val, 145, 35);
+				doc.line(145, 36, 200, 36);
+		doc.text(sPromoDur, 100, 40);
+			doc.text(sPromoStrt_val, 145, 40);
+			doc.text(sPromoEnd_val, 165, 40);
+				doc.line(145, 41, 200, 41);
+		doc.text(sEvalDdln, 100, 45);
+			doc.text(sEvalDdln_val, 145, 45);
+				doc.line(145, 46, 200, 46);
+
+		doc.text(sTtlSale, 100, 50);
+			doc.text(sTtlSale_val, 125, 50);
+				doc.line(125, 51, 150, 51);
+		doc.text(sYTDTarg, 100, 60);
+			doc.text(sYTDTarg_val, 125, 60);
+				doc.line(125, 61, 150, 61);
+		doc.text(sYTDActl, 100, 65);
+			doc.text(sYTDActu_val, 125, 65);
+				doc.line(125, 66, 150, 66);
+
+		doc.text(sYTDDiff, 150, 60);
+			doc.text(sYTDDiff_val, 175, 60);
+				doc.line(175, 61, 200, 61);
+		doc.text(sYTDAchi, 150, 65);
+			doc.text(sYTDAchi_val, 175, 65);
+				doc.line(175, 66, 200, 66);
+
+		doc.text(sBackground, 10, 80);
+			doc.line(46, 90, 200, 90);
+			doc.line(46, 76, 200, 76);
+			doc.line(46, 76, 46, 90);
+			doc.line(200, 76, 200, 90);
+		doc.text(sPromoTitle, 10, 95);
+			doc.line(46, 95, 200, 95);
+			doc.line(46, 91, 200, 91);
+			doc.line(46, 91, 46, 95);
+			doc.line(200, 91, 200, 95);
+		doc.text(sObjectives, 10, 100);
+			doc.line(46, 105, 200, 105);
+			doc.line(46, 96, 200, 96);
+			doc.line(46, 96, 46, 105);
+			doc.line(200, 96, 200, 105);
+		doc.text(sMechanics, 10, 110);
+			doc.line(46, 115, 200, 115);
+			doc.line(46, 106, 200, 106);
+			doc.line(46, 106, 46, 115);
+			doc.line(200, 106, 200, 115);
+		doc.text(sConcession, 10, 120);
+			doc.line(46, 125, 200, 125);
+			doc.line(46, 116, 200, 116);
+			doc.line(46, 116, 46, 125);
+			doc.line(200, 116, 200, 125);
+		doc.text(sRiskInv, 10, 125);
+			doc.line(46, 135, 200, 135);
+			doc.line(46, 126, 200, 126);
+			doc.line(46, 126, 46, 135);
+			doc.line(200, 126, 200, 135);
+
+		doc.text(sBackground_val, 50, 80);
+		doc.text(sPromoTitle_val, 50, 94);
+		doc.text(sObjectives_val, 50, 100);
+		doc.text(sMechanics_val, 50, 110);
+		doc.text(sConcession_val, 50, 120);
+		doc.text(sRisk_val, 50, 130);
+
+				doc.setFont(undefined, 'bold');
+
+			doc.setFillColor(170, 170,170);
+			  doc.rect(10, iRun+1, 190, 10, "F");
+		doc.text("Category/Brand", 10, iRun+5);
+		doc.text("Avg. Monthly Sales", 40, iRun+5);
+		doc.text("Target Sales", 80, iRun+5);
+		doc.text("(Mo. Average)", 120, iRun+5);
+		doc.text("(Project Duration)", 160, iRun+5);
+			doc.text("In Case", 40, iRun+10);
+			doc.text("Peso Value", 60, iRun+10);
+			doc.text("In Case", 80, iRun+10);
+			doc.text("Peso Value", 100, iRun+10);
+			doc.text("In Case", 120, iRun+10);
+			doc.text("Peso Value", 140, iRun+10);
+			doc.text("In Case", 160, iRun+10);
+			doc.text("Peso Value", 180, iRun+10);
+		iRun += 10;
+            doc.setFontSize(8);
+		for(iCount = 0; iCount<aPWPPVA[0].length; iCount++){
+			doc.text(aPWPPVA[0][iCount], 10, iRun+5);
+			doc.text(aPWPPVA[1][iCount].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','), 40, iRun+5);
+				iAMSICTtl = parseInt(iAMSICTtl) + parseInt(aPWPPVA[1][iCount]);
+			doc.text(aPWPPVA[2][iCount].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','), 60, iRun+5);
+				iAMSPVTtl = parseInt(iAMSPVTtl) + parseInt(aPWPPVA[2][iCount]);
+			doc.text(aPWPPVA[3][iCount].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','), 80, iRun+5);
+				iITSICTtl = parseInt(iITSICTtl) + parseInt(aPWPPVA[3][iCount]);
+			doc.text(aPWPPVA[4][iCount].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','), 100, iRun+5);
+				iITSPVTtl = parseInt(iITSPVTtl) + parseInt(aPWPPVA[4][iCount]);
+			doc.text(aPWPPVA[5][iCount].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','), 120, iRun+5);
+				iMAIICTtl = parseInt(iMAIICTtl) + parseInt(aPWPPVA[5][iCount]);
+			doc.text(aPWPPVA[6][iCount].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','), 140, iRun+5);
+				iMAIPVTtl = parseInt(iMAIPVTtl) + parseInt(aPWPPVA[6][iCount]);
+			doc.text(aPWPPVA[7][iCount].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','), 160, iRun+5);
+				iTPDICTtl = parseInt(iTPDICTtl) + parseInt(aPWPPVA[7][iCount]);
+			doc.text(aPWPPVA[8][iCount].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','), 180, iRun+5);
+				iTPDPVTtl = parseInt(iTPDPVTtl) + parseInt(aPWPPVA[8][iCount]);
+			iRun+=5;
+		}
+
+		doc.line(10, iRun+1, 200, iRun+1);
+			doc.text(parseFloat(iAMSICTtl).toFixed(2).toString().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','), 40, iRun+5);
+			doc.text(parseFloat(iAMSPVTtl).toFixed(2).toString().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','), 60, iRun+5);
+			doc.text(parseFloat(iITSICTtl).toFixed(2).toString().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','), 80, iRun+5);
+			doc.text(parseFloat(iITSPVTtl).toFixed(2).toString().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','), 100, iRun+5);
+			doc.text(parseFloat(iMAIICTtl).toFixed(2).toString().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','), 120, iRun+5);
+			doc.text(parseFloat(iMAIPVTtl).toFixed(2).toString().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','), 140, iRun+5);
+			doc.text(parseFloat(iTPDICTtl).toFixed(2).toString().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','), 160, iRun+5);
+			doc.text(parseFloat(iTPDPVTtl).toFixed(2).toString().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','), 180, iRun+5);
+
+		iRun+=5;
+            doc.setFontSize(12);
+		doc.setFont(undefined, 'bold');
+		doc.text(sPCE, 74, iRun+10);
+		doc.setFont(undefined, 'normal');
+
+			doc.setFillColor(170, 170,170);
+			  doc.rect(10, iRun+11, 190, 8, "F");
+            doc.setFontSize(8);
+		doc.text("Item Description", 10, iRun+15);
+		doc.text("Qty", 55, iRun+15);
+		doc.text("Unit Cost", 70, iRun+15);
+		doc.text("Total Cost", 85, iRun+15);
+		doc.text("Expense Description", 100, iRun+15);
+		doc.text("Qty", 150, iRun+15);
+		doc.text("Unit Cost", 165, iRun+15);
+		doc.text("Total Cost", 180, iRun+15);
+
+		iRun += 20;
+		for(iCount = 0; iCount<aPWPPCE[0].length; iCount++){
+			doc.text(aPWPPCE[0][iCount], 10, iRun+5);
+			doc.text(aPWPPCE[1][iCount].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','), 55, iRun+5);
+				iItmstiQtyTotal = parseInt(iItmstiQtyTotal) + parseInt(aPWPPCE[1][iCount]);
+			doc.text(aPWPPCE[2][iCount].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','), 70, iRun+5);
+				iItmUntCstTotal = parseInt(iItmUntCstTotal) + parseInt(aPWPPCE[2][iCount]);
+			doc.text(aPWPPCE[3][iCount].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','), 85, iRun+5);
+				iItmTtlCstTotal = parseInt(iItmTtlCstTotal) + parseInt(aPWPPCE[3][iCount]);
+			doc.text(aPWPPCE[4][iCount], 100, iRun+5);
+			doc.text(aPWPPCE[5][iCount].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','), 150, iRun+5);
+				iExpnseQtyTotal = parseInt(iExpnseQtyTotal) + parseInt(aPWPPCE[5][iCount]);
+			doc.text(aPWPPCE[6][iCount].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','), 165, iRun+5);
+				iExpUntCstTotal = parseInt(iExpUntCstTotal) + parseInt(aPWPPCE[6][iCount]);
+			doc.text(aPWPPCE[7][iCount].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','), 180, iRun+5);
+				iExpTtlCstTotal = parseInt(iExpTtlCstTotal) + parseInt(aPWPPCE[7][iCount]);
+			iRun+=5;
+		}
+
+		doc.line(10, iRun+1, 200, iRun+1);
+		doc.text(parseFloat(iItmstiQtyTotal).toFixed(2).toString().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','), 55, iRun+5);
+		doc.text(parseFloat(iItmUntCstTotal).toFixed(2).toString().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','), 70, iRun+5);
+		doc.text(parseFloat(iItmTtlCstTotal).toFixed(2).toString().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','), 85, iRun+5);
+		doc.text(parseFloat(iExpnseQtyTotal).toFixed(2).toString().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','), 150, iRun+5);
+		doc.text(parseFloat(iExpUntCstTotal).toFixed(2).toString().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','), 165, iRun+5);
+		doc.text(parseFloat(iExpTtlCstTotal).toFixed(2).toString().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','), 180, iRun+5);
+            doc.setFontSize(10);
+
+doc.setFontSize(6);
+			doc.setFillColor(50,50,50);
+		doc.text(sFT1, 115, iRun+15);
+			  doc.rect(109, iRun+11, 5, 5, sFB1);
+		doc.text(sFT2, 115, iRun+20);
+			  doc.rect(109, iRun+16, 5, 5, sFB2);
+		doc.text(sFT3, 115, iRun+25);
+			  doc.rect(109, iRun+21, 5, 5, sFB3);
+		doc.text(sFT4, 115, iRun+30);
+			  doc.rect(109, iRun+26, 5, 5, sFB4);
+		doc.text(sFT5, 155, iRun+15);
+			  doc.rect(149, iRun+11, 5, 5, sFB5);
+		doc.text(sFT6, 155, iRun+20);
+			  doc.rect(149, iRun+16, 5, 5, sFB6);
+		doc.text(sFT7, 155, iRun+25);
+			  doc.rect(149, iRun+21, 5, 5, sFB7);
+doc.setFontSize(10);
+
+		doc.text(sTPC, 10, iRun+15);
+			doc.text(sTPC_val, 50, iRun+15);
+			doc.line(50, iRun+16, 100, iRun+16);
+		doc.text(sPS, 10, iRun+25);
+			doc.text(sPS_val, 50, iRun+25);
+			doc.line(50, iRun+26, 100, iRun+26);
+		doc.text(sPC, 10, iRun+30);
+			doc.text(sPC_val, 50, iRun+30);
+			doc.line(50, iRun+31, 100, iRun+31);
+		doc.text(sC2SR, 10, iRun+35);
+			doc.text(sC2SR_val, 50, iRun+35);
+			doc.line(50, iRun+36, 100, iRun+36);
+
+		doc.line(8, iRun+10, 8, iRun+20);
+		doc.line(8, iRun+10, 100, iRun+10);
+		doc.line(100, iRun+10, 100, iRun+20);
+		doc.line(8, iRun+20, 8, iRun+38);
+		doc.line(8, iRun+20, 100, iRun+20);
+		doc.line(100, iRun+20, 100, iRun+38);
+		doc.line(8, iRun+38, 100, iRun+38);
+
+		iRun+=35;
+		doc.text(sSig1, 10, iRun+10);
+			doc.line(10, iRun+31, 50, iRun+31);
+		doc.text(sSigName1, 20, iRun+30);
+		doc.text(sPosition1, 20, iRun+35);
+		doc.text(sSig2, 70, iRun+10);
+			doc.line(70, iRun+31, 120, iRun+31);
+		doc.text(sSigName2, 80, iRun+30);
+		doc.text(sPosition2, 90, iRun+35);
+		doc.text(sSig3, 140, iRun+10);
+			doc.line(140, iRun+31, 190, iRun+31);
+		doc.text(sSigName3, 150, iRun+30);
+		doc.text(sPosition3, 160, iRun+35);
+
+		doc.text(sSig4, 10, iRun+45);
+			doc.line(10, iRun+66, 50, iRun+66);
+		doc.text(sSigName4, 20, iRun+65);
+		doc.text(sPosition4, 25, iRun+70);
+//		doc.text(sSig5, 70, iRun+45);
+//			doc.line(70, iRun+66, 120, iRun+66);
+//		doc.text(sSigName5, 80, iRun+65);
+//		doc.text(sPosition5, 90, iRun+70);
+		doc.text(sSig6, 140, iRun+45);
+			doc.line(140, iRun+66, 190, iRun+66);
+		// doc.text(sSigName6, 150, iRun+65);
+		doc.text(sPosition6, 155, iRun+70);
+
+		imgLoad(iRun);
+window.addEventListener('error', function(event) {
+  console.log('An error occurred:', event.error);
+//	  window.location.reload();
+});
+	</script>
+</head>
+<body>
+
+</body>
+</html>
